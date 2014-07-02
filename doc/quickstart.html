@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Quick start &mdash; bakfu 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="top" title="bakfu 0.1 documentation" href="index.html" />
+    <link rel="next" title="Processing" href="reference/index.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="reference/index.html" title="Processing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">bakfu 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="quick-start">
+<span id="quickstart"></span><h1>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
+<p>To load a few sentences, vectorize them and clusterize them</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">bakfu</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">((</span>
+<span class="gp">... </span>           <span class="s">&#39;Test&#39;</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="s">&#39;Other test&#39;</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="s">&#39;Something else&#39;</span><span class="p">,</span>
+<span class="gp">... </span>           <span class="s">&#39;Nevermind&#39;</span>
+<span class="gp">... </span>           <span class="p">))]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">baf</span> <span class="o">=</span> <span class="n">bakfu</span><span class="o">.</span><span class="n">Chain</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;data.simple&#39;</span><span class="p">,</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">baf</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s">&#39;vectorize.sklearn&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">baf</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s">&#39;cluster.ward&#39;</span><span class="p">,</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">baf</span><span class="o">.</span><span class="n">get_chain</span><span class="p">(</span><span class="s">&#39;result&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="go">[0, 0, 1, 0]</span>
+</pre></div>
+</div>
+<div class="section" id="custom-processor">
+<h2>Custom processor<a class="headerlink" href="#custom-processor" title="Permalink to this headline">¶</a></h2>
+<p>You can write a custom processor and package it with your app.
+You just need to register it.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">..core.routes</span> <span class="kn">import</span> <span class="n">register</span>
+<span class="kn">from</span> <span class="nn">bakfu.data.base</span> <span class="kn">import</span> <span class="n">BaseDataSource</span>
+
+
+<span class="nd">@register</span><span class="p">(</span><span class="s">&#39;data.mydata&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">MyData</span><span class="p">(</span><span class="n">BaseDataSource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BaseDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="s">&#39;this&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s">&#39;that&#39;</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="nn">bakfu</span> <span class="kn">import</span> <span class="n">Chain</span>
+<span class="n">baf</span><span class="o">=</span><span class="n">Chain</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;data.mydata&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Quick start</a><ul>
+<li><a class="reference internal" href="#custom-processor">Custom processor</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="reference/index.html"
+                        title="next chapter">Processing</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/quickstart.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="reference/index.html" title="Processing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             >previous</a> |</li>
+        <li><a href="index.html">bakfu 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Patrick LLORET.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
