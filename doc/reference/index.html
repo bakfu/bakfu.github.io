@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Processing &mdash; bakfu 0.1 documentation</title>
+    <title>Data &mdash; bakfu 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -47,32 +47,66 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="processing">
+  <div class="section" id="data">
+<h1>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="simple-loader">
+<h2>Simple loader<a class="headerlink" href="#simple-loader" title="Permalink to this headline">¶</a></h2>
+<p>To load and access some data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">bakfu</span> <span class="kn">import</span> <span class="n">Chain</span>
+<span class="n">baf</span> <span class="o">=</span> <span class="n">Chain</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c"># load data</span>
+</pre></div>
+</div>
+<p>The data variable must be in the following format :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[(</span><span class="n">id0</span><span class="p">,</span><span class="n">data0</span><span class="p">),(</span><span class="n">id1</span><span class="p">,</span><span class="n">data1</span><span class="p">),</span><span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Where id* are <em>integers</em> and data* are <em>str</em>.</p>
+</div>
+</div>
+<div class="section" id="processing">
 <h1>Processing<a class="headerlink" href="#processing" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="treetagger">
 <h2>Treetagger<a class="headerlink" href="#treetagger" title="Permalink to this headline">¶</a></h2>
 <p>A Treetagger module is available.
 It is set up to lemmatize data.</p>
+<p>To use it :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">bakfu</span> <span class="kn">import</span> <span class="n">Chain</span>
+<span class="n">baf</span> <span class="o">=</span> <span class="n">Chain</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c"># load data</span>
+<span class="n">baf</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s">&#39;tagging.treetagger&#39;</span><span class="p">)</span>
+<span class="c"># by default, tagger returns tokenized data</span>
+<span class="n">baf</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s">&#39;vectorize.sklearn&#39;</span><span class="p">,</span>
+        <span class="n">tokenizer</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">,</span>
+        <span class="n">preprocessor</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">,</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The treetagger install must be accessible.</p>
+</div>
 </div>
 <div class="section" id="pattern">
 <h2>Pattern<a class="headerlink" href="#pattern" title="Permalink to this headline">¶</a></h2>
-<p>A pattern module is available.
+<p>A <a class="reference external" href="https://github.com/clips/pattern">pattern</a> module is available.
 It is set up to lemmatize data.</p>
 <p>To use it :</p>
-<div class="highlight-python"><div class="highlight"><pre>from bakfu import Chain
-baf = Chain.load(…) # load data
-baf.process(&#39;tagging.pattern&#39;)
-# by default, tagger returns tokenized data
-baf.process(&#39;vectorize.sklearn&#39;,
-        tokenizer=lambda x:x,
-        preprocessor=lambda x:x,
-        )
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">bakfu</span> <span class="kn">import</span> <span class="n">Chain</span>
+<span class="n">baf</span> <span class="o">=</span> <span class="n">Chain</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c"># load data</span>
+<span class="n">baf</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s">&#39;tagging.pattern&#39;</span><span class="p">)</span>
+<span class="c"># by default, tagger returns tokenized data</span>
+<span class="n">baf</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s">&#39;vectorize.sklearn&#39;</span><span class="p">,</span>
+        <span class="n">tokenizer</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">,</span>
+        <span class="n">preprocessor</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">,</span>
+        <span class="p">)</span>
 </pre></div>
 </div>
 <div class="section" id="class-reference">
 <h3>Class reference<a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
+</div>
+<div class="section" id="classifying">
+<h1>Classifying<a class="headerlink" href="#classifying" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -83,7 +117,11 @@ baf.process(&#39;vectorize.sklearn&#39;,
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Processing</a><ul>
+<li><a class="reference internal" href="#">Data</a><ul>
+<li><a class="reference internal" href="#simple-loader">Simple loader</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#processing">Processing</a><ul>
 <li><a class="reference internal" href="#treetagger">Treetagger</a></li>
 <li><a class="reference internal" href="#pattern">Pattern</a><ul>
 <li><a class="reference internal" href="#class-reference">Class reference</a></li>
@@ -91,6 +129,7 @@ baf.process(&#39;vectorize.sklearn&#39;,
 </li>
 </ul>
 </li>
+<li><a class="reference internal" href="#classifying">Classifying</a></li>
 </ul>
 
   <h4>Previous topic</h4>
