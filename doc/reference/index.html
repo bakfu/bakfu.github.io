@@ -100,6 +100,16 @@ It is set up to lemmatize data.</p>
         <span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="vectorizer">
+<h2>Vectorizer<a class="headerlink" href="#vectorizer" title="Permalink to this headline">¶</a></h2>
+<p>To use it :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">bakfu</span> <span class="kn">import</span> <span class="n">Chain</span>
+<span class="n">baf</span> <span class="o">=</span> <span class="n">Chain</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c"># load data</span>
+<span class="n">baf</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s">&#39;sklearn.vectorizer&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Refer to sklearn&#8217;s <a class="reference external" href="http://scikit-learn.org/stable/modules/feature_extraction.html#common-vectorizer-usage">feature extraction</a> for more details.</p>
 <div class="section" id="class-reference">
 <h3>Class reference<a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h3>
 </div>
@@ -123,7 +133,8 @@ It is set up to lemmatize data.</p>
 </li>
 <li><a class="reference internal" href="#processing">Processing</a><ul>
 <li><a class="reference internal" href="#treetagger">Treetagger</a></li>
-<li><a class="reference internal" href="#pattern">Pattern</a><ul>
+<li><a class="reference internal" href="#pattern">Pattern</a></li>
+<li><a class="reference internal" href="#vectorizer">Vectorizer</a><ul>
 <li><a class="reference internal" href="#class-reference">Class reference</a></li>
 </ul>
 </li>

@@ -62,6 +62,18 @@ To use it :
             preprocessor=lambda x:x,
             )
 
+------------------------
+Vectorizer
+------------------------
+
+To use it : 
+::
+    from bakfu import Chain
+    baf = Chain.load(data) # load data
+    baf.process('sklearn.vectorizer')
+
+Refer to sklearn's `feature extraction <http://scikit-learn.org/stable/modules/feature_extraction.html#common-vectorizer-usage>`_ for more details. 
+
 _______________________
 Class reference
 _______________________
