@@ -68,6 +68,39 @@
 <h2>Core concepts<a class="headerlink" href="#core-concepts" title="Permalink to this headline">¶</a></h2>
 <p>The library is structured around a toolchain approach.
 You start by creating a Chain, and add processing steps to it : data loading, tagging, clustering ...</p>
+<div class="section" id="creating-a-chain">
+<h3>Creating a chain<a class="headerlink" href="#creating-a-chain" title="Permalink to this headline">¶</a></h3>
+<p>To create a new chain :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">baf</span> <span class="o">=</span> <span class="n">bakfu</span><span class="o">.</span><span class="n">Chain</span><span class="p">(</span><span class="n">lang</span><span class="o">=</span><span class="s">&#39;en&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The lang parameter chooses the language.
+Supported languages : <strong>en</strong>, <strong>fr</strong>.</p>
+</div>
+<div class="section" id="loading-and-accessing-data">
+<h3>Loading and accessing data<a class="headerlink" href="#loading-and-accessing-data" title="Permalink to this headline">¶</a></h3>
+<p>Raw data can be load as follow :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;test 2&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;test 3&#39;</span><span class="p">)</span>
+    <span class="p">]</span>
+<span class="n">baf</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;data.simple&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To get the last dataset loaded without indexes :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">baf</span><span class="o">.</span><span class="n">get_chain</span><span class="p">(</span><span class="s">&quot;data_source&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>To list all exlicitely loaded datasets :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">baf</span><span class="o">.</span><span class="n">data_sources</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Some processors that transform data embed their own dataset containing processed data.</p>
+</div>
+</div>
 </div>
 </div>
 
@@ -80,7 +113,11 @@ You start by creating a Chain, and add processing steps to it : data loading, ta
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Introduction</a><ul>
-<li><a class="reference internal" href="#core-concepts">Core concepts</a></li>
+<li><a class="reference internal" href="#core-concepts">Core concepts</a><ul>
+<li><a class="reference internal" href="#creating-a-chain">Creating a chain</a></li>
+<li><a class="reference internal" href="#loading-and-accessing-data">Loading and accessing data</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
