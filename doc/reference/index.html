@@ -8,7 +8,7 @@
     
     <title>Data &mdash; bakfu 0.1 documentation</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,13 +23,13 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="top" title="bakfu 0.1 documentation" href="../index.html" />
     <link rel="prev" title="Quick start" href="../quickstart.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -38,14 +38,14 @@
         <li class="right" >
           <a href="../quickstart.html" title="Quick start"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">bakfu 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">bakfu 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="data">
 <h1>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h1>
@@ -61,6 +61,17 @@
 </pre></div>
 </div>
 <p>Where id* are <em>integers</em> and data* are <em>str</em>.</p>
+</div>
+<div class="section" id="save-load-a-chain">
+<h2>Save/load a chain<a class="headerlink" href="#save-load-a-chain" title="Permalink to this headline">¶</a></h2>
+<p>To save a chain to a pickle file :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">baf</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s">&#39;pickle.save&#39;</span><span class="p">,</span><span class="s">&#39;file.pkl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And to load it :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">baf</span> <span class="o">=</span> <span class="n">Chain</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;pickle.load&#39;</span><span class="p">,</span><span class="s">&#39;file.pkl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="processing">
@@ -100,18 +111,13 @@ It is set up to lemmatize data.</p>
         <span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="vectorizer">
-<h2>Vectorizer<a class="headerlink" href="#vectorizer" title="Permalink to this headline">¶</a></h2>
-<p>To use it :</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">bakfu</span> <span class="kn">import</span> <span class="n">Chain</span>
-<span class="n">baf</span> <span class="o">=</span> <span class="n">Chain</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c"># load data</span>
-<span class="n">baf</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s">&#39;sklearn.vectorizer&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Refer to sklearn&#8217;s <a class="reference external" href="http://scikit-learn.org/stable/modules/feature_extraction.html#common-vectorizer-usage">feature extraction</a> for more details.</p>
 <div class="section" id="class-reference">
 <h3>Class reference<a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="bakfu.process.tagging.tag_pattern.PatternTagger">
+<code class="descclassname">bakfu.process.tagging.tag_pattern.</code><code class="descname">PatternTagger</code><a class="headerlink" href="#bakfu.process.tagging.tag_pattern.PatternTagger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 </div>
 </div>
@@ -123,18 +129,18 @@ It is set up to lemmatize data.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Data</a><ul>
 <li><a class="reference internal" href="#simple-loader">Simple loader</a></li>
+<li><a class="reference internal" href="#save-load-a-chain">Save/load a chain</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#processing">Processing</a><ul>
 <li><a class="reference internal" href="#treetagger">Treetagger</a></li>
-<li><a class="reference internal" href="#pattern">Pattern</a></li>
-<li><a class="reference internal" href="#vectorizer">Vectorizer</a><ul>
+<li><a class="reference internal" href="#pattern">Pattern</a><ul>
 <li><a class="reference internal" href="#class-reference">Class reference</a></li>
 </ul>
 </li>
@@ -146,12 +152,14 @@ It is set up to lemmatize data.</p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="../quickstart.html"
                         title="previous chapter">Quick start</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/reference/index.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -168,7 +176,7 @@ It is set up to lemmatize data.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -177,12 +185,12 @@ It is set up to lemmatize data.</p>
         <li class="right" >
           <a href="../quickstart.html" title="Quick start"
              >previous</a> |</li>
-        <li><a href="../index.html">bakfu 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">bakfu 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Patrick LLORET.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

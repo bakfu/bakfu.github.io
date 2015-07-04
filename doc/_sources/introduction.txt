@@ -24,42 +24,5 @@ Core concepts
 The library is structured around a toolchain approach.
 You start by creating a Chain, and add processing steps to it : data loading, tagging, clustering ...
 
-Creating a chain 
-___________________
-
-
-To create a new chain :
-::
-    baf = bakfu.Chain(lang='en')
-
-The lang parameter chooses the language.
-Supported languages : **en**, **fr**.
-
-
-Loading and accessing data
-_______________
-
-Raw data can be load as follow :
-::
-    data = [
-        (0, 'test'),
-        (1, 'test 2'),
-        (2, 'test 3')
-        ]
-    baf.load('data.simple', data)    
-
-To get the last dataset loaded without indexes :
-::
-    baf.get_chain("data_source").get_data()
-
-
-
-To list all exlicitely loaded datasets : 
-::
-    baf.data_sources
-
-.. note::
-    Some processors that transform data embed their own dataset containing processed data.
-
 
 .. _`scikit-learn`: http://scikit-learn.org
