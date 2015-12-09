@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bakfu.classify.ml.forest &mdash; bakfu 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../../_static/sidebar.js"></script>
+    <link rel="top" title="bakfu 0.1 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">bakfu 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bakfu.classify.ml.forest</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Random Forest classifier</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">DBSCAN</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="kn">from</span> <span class="nn">...core.routes</span> <span class="kn">import</span> <span class="n">register</span>
+<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">BaseMl</span><span class="p">,</span> <span class="n">BaseMlSk</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">ExtraTreesClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+
+<span class="nd">@register</span><span class="p">(</span><span class="s">&#39;ml.forest&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ForestMl"><a class="viewcode-back" href="../../../../reference/index.html#bakfu.classify.ml.forest.ForestMl">[docs]</a><span class="k">class</span> <span class="nc">ForestMl</span><span class="p">(</span><span class="n">BaseMlSk</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Random forest</span>
+<span class="sd">Parameters (not implemented yet) :</span>
+<span class="sd">classifier : if not specified, create a new classifier.</span>
+<span class="sd">data : if not specified, get most recent data from the chain.</span>
+<span class="sd">action : if not specified, a new classifier will be created </span>
+<span class="sd">    and used on available data</span>
+<span class="sd">    if &#39;fit&#39; : classifier is created but not used</span>
+<span class="sd">    if &#39;predict&#39;: previous classifier is used</span>
+<span class="sd">Usage : </span>
+<span class="sd">  &gt;&gt;&gt; #create clusters</span>
+<span class="sd">  &gt;&gt;&gt; baf.process(&#39;cluster.ward&#39;)</span>
+<span class="sd">  &gt;&gt;&gt; #load new data</span>
+<span class="sd">  &gt;&gt;&gt; baf.load(&#39;data.simple&#39;,(...))</span>
+<span class="sd">  &gt;&gt;&gt; #train classifier and use </span>
+<span class="sd">  &gt;&gt;&gt; baf.process(&#39;ml.forest&#39;)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">init_kwargs</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;n_estimators&#39;</span><span class="p">,</span> <span class="s">&#39;classifier&#39;</span><span class="p">,</span> <span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="s">&#39;action&#39;</span><span class="p">)</span>
+    <span class="n">run_kwargs</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="c">#max_depth</span>
+    <span class="c">#init_method = RandomForestClassifier.__init__</span>
+    <span class="c">#run_method = RandomForestClassifier.fit_transform</span>
+    <span class="n">classifier_class</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span></div>
+
+
+
+<span class="nd">@register</span><span class="p">(</span><span class="s">&#39;ml.extratrees&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ExtraTreesMl</span><span class="p">(</span><span class="n">BaseMlSk</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">init_kwargs</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;n_estimators&#39;</span><span class="p">,</span> <span class="s">&#39;classifier&#39;</span><span class="p">,</span> <span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="s">&#39;action&#39;</span><span class="p">)</span>
+    <span class="n">run_kwargs</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">classifier_class</span> <span class="o">=</span> <span class="n">ExtraTreesClassifier</span>
+
+
+<span class="nd">@register</span><span class="p">(</span><span class="s">&#39;ml.decisiontree&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ExtraTreesMl"><a class="viewcode-back" href="../../../../reference/index.html#bakfu.classify.ml.forest.ExtraTreesMl">[docs]</a><span class="k">class</span> <span class="nc">ExtraTreesMl</span><span class="p">(</span><span class="n">BaseMlSk</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">classifier_class</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span></div>
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">bakfu 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Patrick LLORET.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.3.
+    </div>
+  </body>
+</html>
